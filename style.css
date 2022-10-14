@@ -1,0 +1,55 @@
+*{
+    margin:0;
+    padding:0;
+}
+
+.btn{
+    border:2px solid black;
+    width:6vw;
+    height:4.5vh;
+    padding-top:1.5vh;
+    font-size:1rem;
+    background-color:hsl(0,0%,60%);
+    text-align:center;
+    display:inline-block;
+}
+.btn:hover{
+    cursor:pointer;
+    background-color:hsl(0,0%,50%);
+}
+#left{
+    margin-left:43%;
+}
+.anc{
+    color:black;  
+}
+.bam{
+    display:inline-block;
+    width:12vw;
+    height:16vh;
+    border:2px solid black;
+    margin:2px;
+    background-color:orange;
+    font-size:0.75em;
+}
+td{
+    width:8vw;
+    height:10vh;
+    background:linear-gradient(180deg, hsl(40, 100%, 50%), hsl(40, 100%, 70%), hsl(40, 100%, 50%));
+    text-align:center;
+    border:2px solid black;
+}
+.nam{
+    font-size:0.5rem;
+}
+.tDay{
+    font-size:0.75rem;
+    display:inline;
+}
+.week{
+    font-size:0.75rem;
+    display:inline;
+}
+table{
+    margin-left:20%;
+}
