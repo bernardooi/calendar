@@ -13,7 +13,7 @@
 <? 
 
 include("namnsdag.php");
-    
+$bday="";
 $date = $_GET["date"] ?? date("Y-m-d");
 $fast=strtotime($date);
 $year = date('Y', $fast);
@@ -31,7 +31,7 @@ $dayOfWeek = date('w', $firstDay);
  <caption><? echo("<h2>".$strMonth." ".$year."</h2>"); ?></caption>
  <thead>
  <tr>
- <th abbr="Sunday" scope="col" title="Sunday">S</th>
+ <th abbr="Sunday" scope="col" title="Sunday" style="color:red">S</th>
  <th abbr="Monday" scope="col" title="Monday">M</th>
  <th abbr="Tuesday" scope="col" title="Tuesday">T</th>
  <th abbr="Wednesday" scope="col" title="Wednesday">W</th>
@@ -59,18 +59,67 @@ $dayOfWeek = date('w', $firstDay);
         $namnsdag = implode(" " , $namn[$totaldays]);
         $day=date("D", strtotime($dag));
         $week = date('W', strtotime($dag)); 
-    
+        $file=fopen("birthday.txt", "r");
+
+        // $Arr = file("birthday.txt");
+        
+
+        // for($x=0;$x <count($Arr);$x++)
+        // {
+
+        //     $temp=explode(".",$Arr[$x]);
+        //     var_dump($temp);
+        //     $temp2=explode("-", $temp[0]);
+        //     $bDate=$temp2[1]."-".$temp2[2];
+        //     echo $bDate;
+        //     if($bDate==$month."-".$i)
+        //     {
+        //         $bday.="$temp[1]";
+
+        //     }
+        
+        // }
+        if($bdayArr=fgets($file))
+        {
+        $temp=explode(",", $bdayArr);
+        for($x=0;$x < count($temp);$x++)
+        {
+            $t="$month-$i";
+            $temp2=explode(".",$temp[$x]);
+            $temp3= substr($temp2[0], 5);
+            $bDate=$temp3;
+            if($bDate==$t)
+            {
+                $bday.="$temp2[1]";
+                break;
+            }
+
+            else if($bDate != $t)
+             {
+                 $bday= "";
+             }
+        }
+        }
+
         if($day == "Mon")
         {
             echo "<td>";
             echo "<p class='week'>W".$week."</p>";
-            echo "<p class='tDay'> D:".$totaldays."</p>"."<p class='nam'>".$namnsdag."</p>". $i . ".     " .$day;
+            echo "<p class='tDay'> D:".$totaldays."</p>"."<p class='nam'>".$namnsdag."</p>". $i . ".     " .$day. "<p>".$bday."</p>";
             echo("</td>");
+        }
+        else if($day == "Sun")
+        {
+
+            echo("<td>"); 
+            echo "<p class='tDay' style='color:red;'> D:".$totaldays."</p>"."<p class='nam' style='color:red;'>".$namnsdag."</p>". "<p style='color:red;'>". $i.". ". $day. "</p>". "<p style='color:red;'>".$bday."</p>";
+            echo("</td>");
+
         }
         else
         {   
         echo("<td>"); 
-        echo "<p class='tDay'> D:".$totaldays."</p>"."<p class='nam'>".$namnsdag."</p>". $i.". ". $day;
+        echo "<p class='tDay'> D:".$totaldays."</p>"."<p class='nam'>".$namnsdag."</p>". $i.". ". $day. "<p>".$bday."</p>";
         echo("</td>");
         }
 
@@ -92,23 +141,20 @@ $dayOfWeek = date('w', $firstDay);
     {
 
     $file=fopen("birthday.txt", "a+");
-    $writeB= $_POST["bDay"].", ".$_POST["name"]."\n";
+    $writeB=",". $_POST["bDay"].".".$_POST["name"];
     fwrite($file, $writeB);
-    fclose($file);
-    $lines = file("birthday.txt");
-    echo $lines[0];
 
     }
-    
+    fclose($file);
+
 ?>
 
 
-
-<form method="POST">
+<form method="POST" action="index.php">
     <br>
         <label for="birthday">Birthday:</label>
     <br>
-        <input type="text" name="bDay" id="birthday">
+        <input type="date" name="bDay" id="birthday">
     <br>
     <br>
         <label for="namn">Name:</label>
